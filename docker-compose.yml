@@ -10,8 +10,10 @@ services:
       - PMA_ARBITRARY=1
   phpmyadmin_service:
     image: 'phpmyadmin/phpmyadmin'
-    links:
-      - 'superauman-mysql:db'
+    depends_on:
+      - 'superauman-mysql'
+    # links:
+    #   - 'superauman-mysql:db'
     ports:
       - '8080:80'
     environment:
@@ -21,7 +23,6 @@ services:
       - PMA_HOST=superauman-mysql
   superauman-server:
     build:
-      dockerfile: .
       context: ./server
     ports:
       - '5000:5000'
